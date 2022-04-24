@@ -60,9 +60,9 @@ public class TopicosController {
     }
 
     @PostMapping
-    public ResponseEntity<TopicoDTO> cadastrarTopico (
+    public ResponseEntity<TopicoDTO> cadastrarTopico(
             @RequestBody TopicoForm form,
-            UriComponentsBuilder uriBuilder){
+            UriComponentsBuilder uriBuilder) {
 
         Topico topico = topicoService.cadastrar(form);
 
@@ -71,9 +71,7 @@ public class TopicosController {
                 .buildAndExpand(topico.getId())
                 .toUri();
 
-        return ResponseEntity
-                .created(uri)
-                .body(new TopicoDTO(topico));
+        return ResponseEntity.created(uri).body(new TopicoDTO(topico));
     }
 
 

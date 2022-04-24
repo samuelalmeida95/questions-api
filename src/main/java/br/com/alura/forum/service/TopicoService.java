@@ -33,7 +33,12 @@ public class TopicoService {
     }
 
     public List<Topico> findAll() {
-        return topicoRepository.findAll();
+        List<Topico> topicos = topicoRepository.findAll();
+
+        if(topicos.isEmpty())
+            throw new RuntimeException("Não existem tópicos.");
+
+        return topicos;
     }
 
     public List<Topico> findAllByNomeCurso(String nomeCurso) {
