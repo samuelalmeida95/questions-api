@@ -1,19 +1,24 @@
 package br.com.alura.forum.service;
 
+import br.com.alura.forum.controller.dto.TopicoDTO;
+import br.com.alura.forum.controller.form.TopicoForm;
 import br.com.alura.forum.modelo.Topico;
+import br.com.alura.forum.repository.CursoRepository;
 import br.com.alura.forum.repository.TopicoRepository;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class TopicoService {
 
     @Autowired
     private TopicoRepository topicoRepository;
+
+    @Autowired
+    private CursoRepository cursoRepository;
 
     public Topico findById(Long idTopico) {
         return topicoRepository
@@ -38,5 +43,10 @@ public class TopicoService {
             throw new RuntimeException("Curso inexistente");
 
         return cursos;
+    }
+
+    public Topico cadastrar(TopicoForm form) {
+        Topico topico = form.converter(cursoRepository);
+        return topicoRepository.save(topico);
     }
 }
