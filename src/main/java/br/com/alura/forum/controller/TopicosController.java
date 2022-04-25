@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
@@ -61,7 +62,7 @@ public class TopicosController {
 
     @PostMapping
     public ResponseEntity<TopicoDTO> cadastrarTopico(
-            @RequestBody TopicoForm form,
+            @RequestBody @Valid TopicoForm form,
             UriComponentsBuilder uriBuilder) {
 
         Topico topico = topicoService.cadastrar(form);
@@ -73,6 +74,4 @@ public class TopicosController {
 
         return ResponseEntity.created(uri).body(new TopicoDTO(topico));
     }
-
-
 }

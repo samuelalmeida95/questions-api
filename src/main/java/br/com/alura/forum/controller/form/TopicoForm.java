@@ -5,11 +5,17 @@ import br.com.alura.forum.modelo.Topico;
 import br.com.alura.forum.repository.CursoRepository;
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 @Data
 public class TopicoForm {
 
+    @NotEmpty @NotNull
     private String titulo;
+    @NotEmpty @NotNull
     private String mensagem;
+    @NotEmpty @NotNull
     private String nomeCurso;
 
     public Topico converter(CursoRepository cursoRepository){

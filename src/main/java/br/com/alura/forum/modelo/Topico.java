@@ -1,6 +1,5 @@
 package br.com.alura.forum.modelo;
 
-import br.com.alura.forum.controller.form.TopicoForm;
 import lombok.Data;
 
 import javax.persistence.*;
