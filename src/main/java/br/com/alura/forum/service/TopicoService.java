@@ -65,4 +65,8 @@ public class TopicoService {
         topicoParaAtualizar.setTitulo(form.getTitulo());
         topicoParaAtualizar.setMensagem(form.getMensagem());
     }
+
+    public void deletar(Long idTopico) {
+        topicoRepository.deleteById(idTopico);
+    }
 }
