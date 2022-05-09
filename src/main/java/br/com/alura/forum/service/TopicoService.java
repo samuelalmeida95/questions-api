@@ -6,7 +6,10 @@ import br.com.alura.forum.modelo.Topico;
 import br.com.alura.forum.repository.CursoRepository;
 import br.com.alura.forum.repository.TopicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
 
 import java.util.List;
 
@@ -23,20 +26,20 @@ public class TopicoService {
     public Topico findById(Long idTopico) {
         return topicoRepository
                 .findById(idTopico)
-                .orElseThrow(() -> new RuntimeException("topico inexistente"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tópico inexistente"));
     }
 
     public Topico findByTitulo(String titulo) {
         return topicoRepository
                 .findByTitulo(titulo)
-                .orElseThrow(()-> new RuntimeException("titulo inexistente"));
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Título inexistente"));
     }
 
     public List<Topico> findAll() {
         List<Topico> topicos = topicoRepository.findAll();
 
         if(topicos.isEmpty())
-            throw new RuntimeException("Não existem tópicos.");
+            throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Não existem Tópicos");
 
         return topicos;
     }
@@ -45,7 +48,7 @@ public class TopicoService {
         List<Topico> cursos = topicoRepository.findByCursoNome(nomeCurso);
 
         if (cursos.isEmpty())
-            throw new RuntimeException("Curso inexistente");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Curso inexistente!");
 
         return cursos;
     }
@@ -56,7 +59,7 @@ public class TopicoService {
     }
 
     public Topico atualizar(Long idTopico, AtualizacaoTopicoForm form) {
-        Topico topicoParaAtualizar = topicoRepository.getById(idTopico);
+        Topico topicoParaAtualizar = findById(idTopico);
         atualizaTopico(form, topicoParaAtualizar);
         return topicoRepository.save(topicoParaAtualizar);
     }
