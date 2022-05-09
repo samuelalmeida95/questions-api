@@ -6,14 +6,14 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class RespostaDto {
+public class RespostaDTO {
 
     private Long id;
     private String mensagem;
     private LocalDateTime dataCriacao;
     private String nomeAutor;
 
-    public RespostaDto(Resposta resposta) {
+    public RespostaDTO(Resposta resposta) {
         this.id = resposta.getId();
         this.mensagem = resposta.getMensagem();
         this.dataCriacao = resposta.getDataCriacao();

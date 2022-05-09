@@ -1,6 +1,6 @@
 package br.com.alura.forum.service;
 
-import br.com.alura.forum.controller.dto.TopicoDTO;
+import br.com.alura.forum.controller.form.AtualizacaoTopicoForm;
 import br.com.alura.forum.controller.form.TopicoForm;
 import br.com.alura.forum.modelo.Topico;
 import br.com.alura.forum.repository.CursoRepository;
@@ -53,5 +53,16 @@ public class TopicoService {
     public Topico cadastrar(TopicoForm form) {
         Topico topico = form.converter(cursoRepository);
         return topicoRepository.save(topico);
+    }
+
+    public Topico atualizar(Long idTopico, AtualizacaoTopicoForm form) {
+        Topico topicoParaAtualizar = topicoRepository.getById(idTopico);
+        atualizaTopico(form, topicoParaAtualizar);
+        return topicoRepository.save(topicoParaAtualizar);
+    }
+
+    private void atualizaTopico(AtualizacaoTopicoForm form, Topico topicoParaAtualizar) {
+        topicoParaAtualizar.setTitulo(form.getTitulo());
+        topicoParaAtualizar.setMensagem(form.getMensagem());
     }
 }

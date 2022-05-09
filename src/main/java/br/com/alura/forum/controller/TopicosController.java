@@ -1,9 +1,9 @@
 package br.com.alura.forum.controller;
 
-import br.com.alura.forum.controller.dto.DetalhesTopicoDto;
+import br.com.alura.forum.controller.dto.DetalhesTopicoDTO;
 import br.com.alura.forum.controller.dto.TopicoDTO;
+import br.com.alura.forum.controller.form.AtualizacaoTopicoForm;
 import br.com.alura.forum.controller.form.TopicoForm;
-import br.com.alura.forum.modelo.Curso;
 import br.com.alura.forum.modelo.Topico;
 import br.com.alura.forum.service.TopicoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,15 +26,16 @@ public class TopicosController {
 
     @GetMapping("/{idTopico}")
     @ResponseStatus(HttpStatus.OK)
-    public DetalhesTopicoDto buscarPorId(@PathVariable Long  idTopico) {
+    public DetalhesTopicoDTO buscarPorId(@PathVariable Long  idTopico) {
          Topico topico = topicoService.findById(idTopico);
-         return new DetalhesTopicoDto(topico);
+         return new DetalhesTopicoDTO(topico);
     }
 
     @GetMapping(value = "/nomeTitulo")
     @ResponseStatus(HttpStatus.OK)
-    public Topico buscarPorTitulo(@RequestParam String titulo) {
-        return topicoService.findByTitulo(titulo);
+    public DetalhesTopicoDTO buscarPorTitulo(@RequestParam String titulo) {
+        Topico tituloTpico = topicoService.findByTitulo(titulo);
+        return new DetalhesTopicoDTO(tituloTpico);
     }
 
     @GetMapping("/listarTopicos")
@@ -77,5 +77,13 @@ public class TopicosController {
         return ResponseEntity.created(uri).body(new TopicoDTO(topico));
     }
 
+    @PutMapping(value = "atualizar/{idTopico}")
+    public ResponseEntity<TopicoDTO> atualizarTopico(
+            @PathVariable Long idTopico, 
+            @RequestBody @Valid AtualizacaoTopicoForm form){
 
+        Topico topico = topicoService.atualizar(idTopico, form);
+
+        return ResponseEntity.ok().body(new TopicoDTO(topico));
+    }
 }
