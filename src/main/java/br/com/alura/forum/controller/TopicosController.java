@@ -1,5 +1,6 @@
 package br.com.alura.forum.controller;
 
+import br.com.alura.forum.controller.dto.DetalhesTopicoDto;
 import br.com.alura.forum.controller.dto.TopicoDTO;
 import br.com.alura.forum.controller.form.TopicoForm;
 import br.com.alura.forum.modelo.Curso;
@@ -26,8 +27,9 @@ public class TopicosController {
 
     @GetMapping("/{idTopico}")
     @ResponseStatus(HttpStatus.OK)
-    public Topico buscarPorId(@PathVariable Long  idTopico) {
-        return topicoService.findById(idTopico);
+    public DetalhesTopicoDto buscarPorId(@PathVariable Long  idTopico) {
+         Topico topico = topicoService.findById(idTopico);
+         return new DetalhesTopicoDto(topico);
     }
 
     @GetMapping(value = "/nomeTitulo")
@@ -74,4 +76,6 @@ public class TopicosController {
 
         return ResponseEntity.created(uri).body(new TopicoDTO(topico));
     }
+
+
 }
